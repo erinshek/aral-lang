@@ -1,0 +1,162 @@
+package project.aral.parser;
+
+import project.aral.lexer.Token;
+import project.aral.parser.ast.*;
+import project.aral.token.TokenType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Parser {
+    private List<Token> tokens;
+    private int position;
+    private Token currentToken;
+
+    public Parser(List<Token> tokens) {
+        this.tokens = tokens;
+        this.position = 0;
+        this.currentToken = tokens.get(0);
+    }
+
+    private void advance() {
+        position++;
+        if (position < tokens.size()) {
+            currentToken = tokens.get(position);
+        }
+    }
+
+    private void expect(TokenType type) {
+        if (currentToken.getType() != type) {
+            throw new RuntimeException("Expected " + type + " but got " + 
+                currentToken.getType() + " at line " + currentToken.getLine());
+        }
+        advance();
+    }
+
+    public List<ASTNode> parse() {
+        List<ASTNode> statements = new ArrayList<>();
+        
+        while (currentToken.getType() != TokenType.EOF) {
+            statements.add(parseStatement());
+        }
+        
+        return statements;
+    }
+
+    private ASTNode parseStatement() {
+        // KEYWORD bo'lsa - VariableDeclaration yoki PrintStatement
+        if (currentToken.getType() == TokenType.KEYWORD) {
+            String keyword = currentToken.getValue();
+            
+            if (keyword.equals("ózgeriwshi")) {
+                return parseVariableDeclaration();
+            } else if (keyword.equals("basıw")) {
+                return parsePrintStatement();
+            }
+        }
+        
+        throw new RuntimeException("Unexpected token: " + currentToken.getValue() + 
+            " at line " + currentToken.getLine());
+    }
+
+    private ASTNode parseVariableDeclaration() {
+        int line = currentToken.getLine();
+        expect(TokenType.KEYWORD);
+
+        if (currentToken.getType() != TokenType.KEYWORD) {
+            throw new RuntimeException("Expected type at line " + line);
+        }
+        String type = currentToken.getValue();
+        advance();
+
+        if (currentToken.getType() != TokenType.IDENTIFIER) {
+            throw new RuntimeException("Expected identifier at line " + line);
+        }
+        String name = currentToken.getValue();
+        advance();
+
+        expect(TokenType.EQUAL);
+
+        ASTNode value = parseExpression();
+
+        expect(TokenType.SEMICOLON);
+        
+        return new VariableDeclaration(type, name, value, line);
+    }
+
+    private ASTNode parsePrintStatement() {
+        int line = currentToken.getLine();
+        expect(TokenType.KEYWORD);
+        expect(TokenType.LEFT_PAREN);
+        
+        ASTNode expression = parseExpression();
+        
+        expect(TokenType.RIGHT_PAREN);
+        expect(TokenType.SEMICOLON);
+        
+        return new PrintStatement(expression, line);
+    }
+
+    private ASTNode parseExpression() {
+        return parseAdditive();
+    }
+
+    private ASTNode parseAdditive() {
+        ASTNode left = parseMultiplicative();
+        
+        while (currentToken.getType() == TokenType.PLUS || 
+               currentToken.getType() == TokenType.MINUS) {
+            String operator = currentToken.getValue();
+            int line = currentToken.getLine();
+            advance();
+            ASTNode right = parseMultiplicative();
+            left = new BinaryExpression(left, operator, right, line);
+        }
+        
+        return left;
+    }
+
+    private ASTNode parseMultiplicative() {
+        ASTNode left = parsePrimary();
+        
+        while (currentToken.getType() == TokenType.MULTIPLY || 
+               currentToken.getType() == TokenType.DIVIDE) {
+            String operator = currentToken.getValue();
+            int line = currentToken.getLine();
+            advance();
+            ASTNode right = parsePrimary();
+            left = new BinaryExpression(left, operator, right, line);
+        }
+        
+        return left;
+    }
+
+    private ASTNode parsePrimary() {
+        Token token = currentToken;
+
+        if (token.getType() == TokenType.NUMBER) {
+            advance();
+            return new NumberLiteral(Double.parseDouble(token.getValue()), token.getLine());
+        }
+
+        if (token.getType() == TokenType.STRING) {
+            advance();
+            return new StringLiteral(token.getValue(), token.getLine());
+        }
+
+        if (token.getType() == TokenType.IDENTIFIER) {
+            advance();
+            return new Identifier(token.getValue(), token.getLine());
+        }
+
+        if (token.getType() == TokenType.LEFT_PAREN) {
+            advance();
+            ASTNode expr = parseExpression();
+            expect(TokenType.RIGHT_PAREN);
+            return expr;
+        }
+        
+        throw new RuntimeException("Unexpected token in expression: " + token.getValue() + 
+            " at line " + token.getLine());
+    }
+}
