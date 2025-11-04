@@ -1,5 +1,6 @@
 package project.aral;
 
+import project.aral.interpreter.Interpreter;
 import project.aral.lexer.Lexer;
 import project.aral.lexer.Token;
 import project.aral.parser.Parser;
@@ -23,6 +24,7 @@ public class App {
         Parser parser = new Parser(tokens);
         List<ASTNode> ast = parser.parse();
 
-        System.out.println(ast);
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpret(ast);
     }
 }
