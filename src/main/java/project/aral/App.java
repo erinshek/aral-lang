@@ -11,10 +11,10 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         String code = """
-        ózgeriwshi san a = 3;
-        ózgeriwshi san b = 5;
+        ózgeriwshi san a = 25;
+        ózgeriwshi san b = 25;
         
-        eger (a > b) {
+        eger (a > b) bolsa {
             basıw("a sanı, b sanınan úlken");
         } ol bolmasa (b > a) {
             basıw("b sanı, a sanınan úlken");

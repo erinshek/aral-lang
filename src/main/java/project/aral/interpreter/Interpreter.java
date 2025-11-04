@@ -93,9 +93,28 @@ public class Interpreter {
     }
 
     private Object evaluateBinaryExpression(BinaryExpression node) {
+        String operator = node.getOperator();
+
+        if (operator.equals("hám")) {
+            Object leftValue = evaluate(node.getLeft());
+            if (!isTrue(leftValue)) {
+                return false;
+            }
+            Object rightValue = evaluate(node.getRight());
+            return isTrue(rightValue);
+        }
+
+        if (operator.equals("yamasa")) {
+            Object leftValue = evaluate(node.getLeft());
+            if (isTrue(leftValue)) {
+                return true;
+            }
+            Object rightValue = evaluate(node.getRight());
+            return isTrue(rightValue);
+        }
+
         Object leftValue = evaluate(node.getLeft());
         Object rightValue = evaluate(node.getRight());
-        String operator = node.getOperator();
 
         if (leftValue instanceof Double && rightValue instanceof Double) {
             double left = (Double) leftValue;

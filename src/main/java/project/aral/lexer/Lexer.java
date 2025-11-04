@@ -13,8 +13,9 @@ public class Lexer {
     private int line;
 
     private static final Set<String> KEYWORDS = Set.of(
-            "ózgeriwshi", "san", "únsiz", "eger", "ol", "dım", "bolmasa",
-            "qayta", "jáne", "aralıq", "shın", "jalǵan", "basıw"
+            "ózgeriwshi", "san", "únsiz", "eger", "ol", "dım", "bolmasa", "bolsa",
+            "qayta", "jáne", "aralıq", "shın", "jalǵan", "basıw",
+            "hám", "yamasa"
     );
 
     public Lexer(String text) {

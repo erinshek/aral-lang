@@ -106,14 +106,20 @@ public class Parser {
 
         ASTNode condition = parseExpression();
 
-        expect(TokenType.RIGHT_PAREN); // )
+        expect(TokenType.RIGHT_PAREN);
+
+        if (currentToken.getType() != TokenType.KEYWORD ||
+                !currentToken.getValue().equals("bolsa")) {
+            throw new RuntimeException("Expected 'bolsa' after condition at line " + line);
+        }
+        advance(); // "bolsa"
+
         expect(TokenType.LEFT_BRACE); // {
 
         List<ASTNode> thenBody = parseBlock();
 
         expect(TokenType.RIGHT_BRACE); // }
 
-        // Elif qismlarni parse qilish
         List<IfStatement> elifParts = new ArrayList<>();
         while (currentToken.getType() == TokenType.KEYWORD &&
                 currentToken.getValue().equals("ol")) {
@@ -135,7 +141,6 @@ public class Parser {
             elifParts.add(new IfStatement(elifCondition, elifBody, null, null, line));
         }
 
-        // Else qismni parse qilish
         List<ASTNode> elseBody = null;
         if (currentToken.getType() == TokenType.KEYWORD &&
                 currentToken.getValue().equals("dım")) {
@@ -159,7 +164,35 @@ public class Parser {
 
 
     private ASTNode parseExpression() {
-        return parseComparison();
+        return parseLogicalOr();
+    }
+
+    private ASTNode parseLogicalOr() {
+        ASTNode left = parseLogicalAnd();
+
+        while (currentToken.getType() == TokenType.KEYWORD &&
+                currentToken.getValue().equals("yamasa")) {
+            String operator = "yamasa";
+            int line = currentToken.getLine();
+            advance();
+            ASTNode right = parseLogicalAnd();
+            left = new BinaryExpression(left, operator, right, line);
+        }
+        return left;
+    }
+
+    private ASTNode parseLogicalAnd() {
+        ASTNode left = parseComparison();
+
+        while (currentToken.getType() == TokenType.KEYWORD &&
+                currentToken.getValue().equals("hám")) {
+            String operator = "hám";
+            int line = currentToken.getLine();
+            advance();
+            ASTNode right = parseComparison();
+            left = new BinaryExpression(left, operator, right, line);
+        }
+        return left;
     }
 
     private ASTNode parseComparison() {
