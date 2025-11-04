@@ -15,11 +15,11 @@ public class App {
         ózgeriwshi san b = 25;
         
         eger (a > b) bolsa {
-            basıw("a sanı, b sanınan úlken");
+            shıǵar("a sanı, b sanınan úlken");
         } ol bolmasa (b > a) {
-            basıw("b sanı, a sanınan úlken");
+            shıǵar("b sanı, a sanınan úlken");
         } dım bolmasa {
-            basıw("a hám b sanları teń");
+            shıǵar("a hám b sanları teń");
         }
         """;
 

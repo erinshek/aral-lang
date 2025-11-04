@@ -50,7 +50,7 @@ public class Parser {
             
             if (keyword.equals("ózgeriwshi")) {
                 return parseVariableDeclaration();
-            } else if (keyword.equals("basıw")) {
+            } else if (keyword.equals("shıǵar")) {
                 return parsePrintStatement();
             } else if (keyword.equals("eger")) {
                 return parseIfStatement();
