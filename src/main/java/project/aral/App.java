@@ -11,11 +11,16 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         String code = """
-            ózgeriwshi san a = 5;
-            ózgeriwshi san b = 10;
-            basıw(a + b);
-            basıw(a * b);
-            basıw(2 + 2 * 2);
+        ózgeriwshi san a = 3;
+        ózgeriwshi san b = 5;
+        
+        eger (a > b) {
+            basıw("a sanı, b sanınan úlken");
+        } ol bolmasa (b > a) {
+            basıw("b sanı, a sanınan úlken");
+        } dım bolmasa {
+            basıw("a hám b sanları teń");
+        }
         """;
 
         Lexer lexer = new Lexer(code);

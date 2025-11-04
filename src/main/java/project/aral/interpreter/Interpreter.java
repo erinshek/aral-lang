@@ -24,6 +24,8 @@ public class Interpreter {
             executeVariableDeclaration((VariableDeclaration) node);
         } else if (node instanceof PrintStatement) {
             executePrintStatement((PrintStatement) node);
+        } else if (node instanceof IfStatement) {
+            executeIfStatement((IfStatement) node);
         } else {
             throw new RuntimeException("Unknown statement type: " + node.getClass().getName());
         }
@@ -38,6 +40,38 @@ public class Interpreter {
     private void executePrintStatement(PrintStatement node) {
         Object value = evaluate(node.getExpression());
         System.out.println(value);
+    }
+
+    private void executeIfStatement(IfStatement node) {
+        Object conditionValue = evaluate(node.getCondition());
+
+        boolean condition = isTrue(conditionValue);
+
+        if (condition) {
+            for (ASTNode statement : node.getThenBody()) {
+                execute(statement);
+            }
+        } else {
+            boolean elifExecuted = false;
+            if (node.getElifParts() != null) {
+                for (IfStatement elifPart : node.getElifParts()) {
+                    Object elifCondition = evaluate(elifPart.getCondition());
+                    if (isTrue(elifCondition)) {
+                        for (ASTNode statement : elifPart.getThenBody()) {
+                            execute(statement);
+                        }
+                        elifExecuted = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!elifExecuted && node.getElseBody() != null) {
+                for (ASTNode statement : node.getElseBody()) {
+                    execute(statement);
+                }
+            }
+        }
     }
 
     private Object evaluate(ASTNode node) {
@@ -84,5 +118,18 @@ public class Interpreter {
         }
 
         throw new RuntimeException("Type error in binary expression");
+    }
+
+    private boolean isTrue(Object value) {
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        if (value instanceof Double) {
+            return  (Double) value != 0.0;
+        }
+        if (value instanceof String) {
+            return !((String) value).isEmpty();
+        }
+        return false;
     }
 }

@@ -52,6 +52,8 @@ public class Parser {
                 return parseVariableDeclaration();
             } else if (keyword.equals("basıw")) {
                 return parsePrintStatement();
+            } else if (keyword.equals("eger")) {
+                return parseIfStatement();
             }
         }
         
@@ -97,8 +99,86 @@ public class Parser {
         return new PrintStatement(expression, line);
     }
 
+    private ASTNode parseIfStatement() {
+        int line = currentToken.getLine();
+        expect(TokenType.KEYWORD); // "eger"
+        expect(TokenType.LEFT_PAREN); // (
+
+        ASTNode condition = parseExpression();
+
+        expect(TokenType.RIGHT_PAREN); // )
+        expect(TokenType.LEFT_BRACE); // {
+
+        List<ASTNode> thenBody = parseBlock();
+
+        expect(TokenType.RIGHT_BRACE); // }
+
+        // Elif qismlarni parse qilish
+        List<IfStatement> elifParts = new ArrayList<>();
+        while (currentToken.getType() == TokenType.KEYWORD &&
+                currentToken.getValue().equals("ol")) {
+            advance(); // "ol"
+
+            if (currentToken.getType() != TokenType.KEYWORD ||
+                    !currentToken.getValue().equals("bolmasa")) {
+                throw new RuntimeException("Expected 'bolmasa' after 'ol' at line " + line);
+            }
+            advance(); // "bolmasa"
+
+            expect(TokenType.LEFT_PAREN);
+            ASTNode elifCondition = parseExpression();
+            expect(TokenType.RIGHT_PAREN);
+            expect(TokenType.LEFT_BRACE);
+            List<ASTNode> elifBody = parseBlock();
+            expect(TokenType.RIGHT_BRACE);
+
+            elifParts.add(new IfStatement(elifCondition, elifBody, null, null, line));
+        }
+
+        // Else qismni parse qilish
+        List<ASTNode> elseBody = null;
+        if (currentToken.getType() == TokenType.KEYWORD &&
+                currentToken.getValue().equals("dım")) {
+            advance(); // "dım"
+
+            if (currentToken.getType() != TokenType.KEYWORD ||
+                    !currentToken.getValue().equals("bolmasa")) {
+                throw new RuntimeException("Expected 'bolmasa' after 'dım' at line " + line);
+            }
+            advance(); // "bolmasa"
+
+            expect(TokenType.LEFT_BRACE);
+            elseBody = parseBlock();
+            expect(TokenType.RIGHT_BRACE);
+        }
+
+        return new IfStatement(condition, thenBody,
+                elifParts.isEmpty() ? null : elifParts,
+                elseBody, line);
+    }
+
+
     private ASTNode parseExpression() {
-        return parseAdditive();
+        return parseComparison();
+    }
+
+    private ASTNode parseComparison() {
+        ASTNode left = parseAdditive();
+
+        while (currentToken.getType() == TokenType.GREATER ||
+                currentToken.getType() == TokenType.LESS ||
+                currentToken.getType() == TokenType.GREATER_OR_EQUAL ||
+                currentToken.getType() == TokenType.LESS_OR_EQUAL ||
+                currentToken.getType() == TokenType.EQUAL_EQUAL ||
+                currentToken.getType() == TokenType.NOT_EQUAL) {
+            String operator = currentToken.getValue();
+            int line = currentToken.getLine();
+            advance();
+            ASTNode right = parseAdditive();
+            left = new BinaryExpression(left, operator, right, line);
+        }
+
+        return left;
     }
 
     private ASTNode parseAdditive() {
@@ -158,5 +238,16 @@ public class Parser {
         
         throw new RuntimeException("Unexpected token in expression: " + token.getValue() + 
             " at line " + token.getLine());
+    }
+
+    private List<ASTNode> parseBlock() {
+        List<ASTNode> statements = new ArrayList<>();
+
+        while (currentToken.getType() != TokenType.RIGHT_BRACE &&
+                currentToken.getType() != TokenType.EOF) {
+            statements.add(parseStatement());
+        }
+
+        return statements;
     }
 }
