@@ -10,16 +10,12 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        String code = """
-        ózgeriwshi san a = 25;
-        ózgeriwshi san b = 25;
+        String code = """ 
+        ózgeriwshi san a = 10;
         
-        eger (a > b) bolsa {
-            shıǵar("a sanı, b sanınan úlken");
-        } ol bolmasa (b > a) {
-            shıǵar("b sanı, a sanınan úlken");
-        } dım bolmasa {
-            shıǵar("a hám b sanları teń");
+        qashan (a > 0) bolsa {
+            shıǵar(a);
+            a = a - 1;
         }
         """;
 
