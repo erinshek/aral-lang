@@ -54,7 +54,13 @@ public class Parser {
                 return parsePrintStatement();
             } else if (keyword.equals("eger")) {
                 return parseIfStatement();
+            } else if (keyword.equals("qashan")) {
+                return parseWhileStatement();
             }
+        }
+
+        if (currentToken.getType() == TokenType.IDENTIFIER) {
+            return parseAssignmentStatement();
         }
         
         throw new RuntimeException("Unexpected token: " + currentToken.getValue() + 
@@ -162,6 +168,47 @@ public class Parser {
                 elseBody, line);
     }
 
+    private ASTNode parseWhileStatement() {
+        int line = currentToken.getLine();
+        expect(TokenType.KEYWORD); // "qashan"
+        expect(TokenType.LEFT_PAREN); // (
+
+        ASTNode condition = parseExpression();
+
+        expect(TokenType.RIGHT_PAREN); // )
+
+        if (currentToken.getType() != TokenType.KEYWORD ||
+                !currentToken.getValue().equals("bolsa")) {
+            throw new RuntimeException("Expected 'bolsa' after condition at line " + line);
+        }
+        advance(); // "bolsa"
+
+        expect(TokenType.LEFT_BRACE); // {
+
+        List<ASTNode> body = parseBlock();
+
+        expect(TokenType.RIGHT_BRACE); // }
+
+        return new WhileStatement(condition, body, line);
+    }
+
+    private ASTNode parseAssignmentStatement() {
+        int line = currentToken.getLine();
+
+        if (currentToken.getType() != TokenType.IDENTIFIER) {
+            throw new RuntimeException("Expected identifier at line " + line);
+        }
+        String name = currentToken.getValue();
+        advance();
+
+        expect(TokenType.EQUAL); // =
+
+        ASTNode value = parseExpression();
+
+        expect(TokenType.SEMICOLON); // ;
+
+        return new AssignmentStatement(name, value, line);
+    }
 
     private ASTNode parseExpression() {
         return parseLogicalOr();

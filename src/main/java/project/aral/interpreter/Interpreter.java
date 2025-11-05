@@ -26,6 +26,10 @@ public class Interpreter {
             executePrintStatement((PrintStatement) node);
         } else if (node instanceof IfStatement) {
             executeIfStatement((IfStatement) node);
+        } else if (node instanceof WhileStatement) {
+            executeWhileStatement((WhileStatement) node);
+        } else if (node instanceof AssignmentStatement) {
+            executeAssignmentStatement((AssignmentStatement) node);
         } else {
             throw new RuntimeException("Unknown statement type: " + node.getClass().getName());
         }
@@ -72,6 +76,31 @@ public class Interpreter {
                 }
             }
         }
+    }
+
+    private void executeWhileStatement(WhileStatement node) {
+        while (true) {
+            Object conditionValue = evaluate(node.getCondition());
+
+            if (!isTrue(conditionValue)) {
+                break;
+            }
+
+            for (ASTNode statement : node.getBody()) {
+                execute(statement);
+            }
+        }
+    }
+
+    private void executeAssignmentStatement(AssignmentStatement node) {
+        String name = node.getName();
+
+        if (!variables.containsKey(name)) {
+            throw new RuntimeException("Undefined variable: " + name + " at line " + node.getLine());
+        }
+
+        Object value = evaluate(node.getValue());
+        variables.put(name, value);
     }
 
     private Object evaluate(ASTNode node) {
