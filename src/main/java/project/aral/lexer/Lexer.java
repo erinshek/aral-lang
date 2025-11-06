@@ -130,6 +130,17 @@ public class Lexer {
                 continue;
             }
 
+            // skip comments
+            if (currentChar == '/') {
+                if (peek() == '/') {
+                    skipSingleLineComment();
+                    continue;
+                } else if (peek() == '*') {
+                    skipMultiLineComment();
+                    continue;
+                }
+            }
+
             // keyword or identifier
             if (Character.isLetter(currentChar)) {
                 tokens.add(makeWordToken());
@@ -260,6 +271,38 @@ public class Lexer {
         // EOF
         tokens.add(new Token(TokenType.EOF, "", line));
         return tokens;
+    }
+
+    private void skipSingleLineComment() {
+        advance();
+        advance();
+
+        while (currentChar != '\n' && currentChar != '\0') {
+            advance();
+        }
+
+        if (currentChar == '\n') {
+            advance();
+        }
+    }
+
+    private void skipMultiLineComment() {
+        advance();
+        advance();
+
+        while (true) {
+            if (currentChar == '\0') {
+                throw new RuntimeException("Unterminated multi-line comment at line " + line);
+            }
+
+            if (currentChar == '*' && peek() == '/') {
+                advance();
+                advance();
+                break;
+            }
+
+            advance();
+        }
     }
 
 }
