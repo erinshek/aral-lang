@@ -11,12 +11,13 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         String code = """ 
-        ózgeriwshi san a = 10;
+        // bul qatar orınlanbaydı
+        shıǵar("Sálem Álem");
         
-        qashan (a > 0) bolsa {
-            shıǵar(a);
-            a = a - 1;
-        }
+        /*  bul
+            jerdiń
+            bári
+            komment */
         """;
 
         Lexer lexer = new Lexer(code);
