@@ -1,0 +1,38 @@
+# Site settings
+title: Aral Programming Language
+description: An experimental, educational programming language built with Java
+baseurl: "/aral-lang"
+url: "https://erinshek.github.io"
+
+# Theme settings
+theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
+
+# Logo
+logo: "/images/logo.png"
+
+# Navigation
+nav_enabled: true
+nav_sort: case_insensitive
+
+# Search
+search_enabled: false
+
+# Footer
+footer_content: "Aral Programming Language - Open Source Educational Project"
+
+# Color scheme
+color_scheme: nil
+
+# Back to top button
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Heading anchors
+heading_anchors: true
+
+# Aux links
+aux_links:
+  "GitHub":
+    - "https://github.com/erinshek/aral-lang"
+aux_links_new_tab: true
