@@ -5,7 +5,7 @@ parent: Tutorial
 nav_order: 1
 ---
 
-# Variables
+# Hello World
 
 Write a `Hello World` program in the Aral programming language.
 

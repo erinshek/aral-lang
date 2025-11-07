@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Variables
+title: If-else
 parent: Tutorial
 nav_order: 3
 ---

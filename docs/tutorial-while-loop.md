@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Variables
+title: While loop
 parent: Tutorial
 nav_order: 4
 ---
