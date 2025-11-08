@@ -1,11 +1,11 @@
 ---
 layout: default
-title: While loop
+title: While Loops
 parent: Tutorial
-nav_order: 4
+nav_order: 6
 ---
 
-# While loop
+# While Loops
 
 While loop in the Aral programming language
 

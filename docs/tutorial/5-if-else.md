@@ -1,13 +1,20 @@
 ---
 layout: default
-title: If-else
+title: If...else
 parent: Tutorial
-nav_order: 3
+nav_order: 5
 ---
 
-# If-else
+# If Statement
 
-Conditional statements in the Aral programming language
+Aral supports the following logical conditions:
+
+ - Equals: `a == b`
+ - Not equals: `a != b`
+ - Less than: `a < b` 
+ - Less than or equal to: `a <= b` 
+ - Greater than: `a > b` 
+ - Greater than or equal to: `a >= b`
 
 ## Example
 
