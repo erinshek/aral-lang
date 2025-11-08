@@ -8,7 +8,7 @@ nav_order: 4
 # Data Types
 
 As the programming language is still in the development stage, not all data types have been created yet. 
-Currently, you can use number and string types. At present, it is possible to create variables of the number type.
+Currently, you can use `number` and `string` types. At present, it is possible to create variables of the number type.
 
 ## Example
 

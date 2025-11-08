@@ -5,6 +5,8 @@ parent: Tutorial
 nav_order: 1
 ---
 
+# Get Started
+
 ## Install Aral
 
 Currently, the Aral programming language is in the development stage. 
@@ -20,3 +22,8 @@ You can see this in the example of the "Hello World" code below.
 ```aral
 shıǵar("Hello World");
 ```
+
+## Syntax
+
+The syntax of the Aral programming language is in Karakalpak. 
+All keywords and commands are written using words from the Karakalpak language.

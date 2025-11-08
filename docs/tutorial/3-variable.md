@@ -5,7 +5,7 @@ parent: Tutorial
 nav_order: 3
 ---
 
-# Creating a Variables
+# Variables
 
 In the Aral programming language, the keyword "ózgeriwshi" is used to create variables. 
 After the "ózgeriwshi" keyword, the data type must be specified.
@@ -18,5 +18,4 @@ After the "ózgeriwshi" keyword, the data type must be specified.
 shıǵar(a + b);
 ```
 
-{: .warning }
-Aral is not a dynamic programming language. Therefore, when declaring a variable, specifying the data type is mandatory.
+_Aral is not a dynamic programming language. Therefore, when declaring a variable, specifying the data type is mandatory._

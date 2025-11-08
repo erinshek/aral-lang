@@ -5,7 +5,7 @@ parent: Tutorial
 nav_order: 2
 ---
 
-# Creating a Comment
+# Comments
 
 In the Aral programming language, comments are written using the `//` symbol, 
 similar to C++ and Java. For multi-line comments, you can use `/* */`.
