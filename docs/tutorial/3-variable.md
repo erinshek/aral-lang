@@ -7,8 +7,8 @@ nav_order: 3
 
 # Variables
 
-In the Aral programming language, the keyword "ózgeriwshi" is used to create variables. 
-After the "ózgeriwshi" keyword, the data type must be specified.
+In the Aral programming language, the keyword `ózgeriwshi` is used to create variables. 
+After the `ózgeriwshi` keyword, the data type must be specified.
 
 ## Example
 
