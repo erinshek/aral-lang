@@ -14,27 +14,33 @@ Aral is an interpretive experimental programming language developed in Java. It 
 
 The project is open-source, and contributions or collaborations from curious minds are warmly welcomed.
 
-## Getting Started
+## License
 
-Check out the following sections to learn more about Aral:
+```markdown
+Business Source License 1.1
 
-- **Installation** - How to set up Aral on your machine
-- **Tutorial** - Step-by-step guide to writing your first Aral program
-- **Language Reference** - Complete syntax and features documentation
-- **Examples** - Sample programs and use cases
+Licensor: Turdıbek Jumabaev
+Licensed Work: Aral Programming Language
+Additional Use Grant: You may use, modify, and distribute the Licensed Work for any non-production use.
 
-## Why Aral?
+Change Date: 2028-11-06 (usually 3 years after the first public release)
 
-Aral was created as an educational tool to:
-- Explore programming language design principles
-- Understand interpreter implementation
-- Experiment with language features
-- Learn compiler theory in practice
+Change License: Apache License 2.0
+
+-------------------------------------------------------------------------------
+
+Terms:
+1. License Grant. The Licensor grants you the right to copy, modify, and use the Licensed Work, including for internal development and testing, but you may not use it in production or offer it as a service to others before the Change Date.
+
+2. Change Date. On the Change Date, the License automatically converts to the Change License specified above.
+
+3. Additional Use Grant. The Licensor may grant limited additional permissions in writing.
+
+4. No Warranty. The Licensed Work is provided “as is” and without warranty of any kind.
+
+For more information, see: https://mariadb.com/bsl11/
+```
 
 ## Contributing
 
 Interested in contributing? Visit our [GitHub repository](https://github.com/erinshek/aral-lang) to get started!
-
----
-
-*Aral is an open-source project built with ❤️ for learning and experimentation.*
