@@ -21,7 +21,7 @@ search_enabled: false
 footer_content: "Aral Programming Language - Open Source Educational Project"
 
 # Color scheme
-color_scheme: nil
+color_scheme: dark
 
 # Back to top button
 back_to_top: true
