@@ -9,10 +9,7 @@ nav_order: 1
 
 ## Install Aral
 
-Currently, the Aral programming language is in the development stage. 
-Therefore, it is not yet possible to install and test it. However, 
-the project is progressing rapidly. As a result, in the near future, 
-you will be able to install an interpreter and see the results of the code you have written.
+You can download the `aral.exe` file from the [Releases](https://github.com/erinshek/aral-lang/releases/tag/v0.1.0) section and use it to run and test code written in the **Aral programming language**.
 
 ## Quickstart
 
@@ -21,6 +18,12 @@ You can see this in the example of the "Hello World" code below.
 
 ```aral
 shıǵar("Hello World");
+```
+
+## Run
+
+```shell
+.\aral.exe run program.aral
 ```
 
 ## Syntax
