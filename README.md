@@ -36,8 +36,7 @@ eger (a > b) bolsa {
 
 ## Installation
 
-Aral is still in its early development stage and is not yet ready for general use.
-However, public builds and usage guides will be available soon — stay tuned!
+You can download the `aral.exe` file from the [Releases](https://github.com/erinshek/aral-lang/releases/tag/v0.1.0) section and use it to run and test code written in the **Aral programming language**.
 
 ## License
 
