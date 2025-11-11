@@ -15,7 +15,7 @@ nav_enabled: true
 nav_sort: case_insensitive
 
 # Search
-search_enabled: false
+search_enabled: true
 
 # Footer
 footer_content: "Aral Programming Language - Open Source Educational Project"
